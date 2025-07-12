@@ -8,6 +8,8 @@ from googleapiclient.discovery import build
 import os
 import secrets
 from fpdf import FPDF
+import json
+from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', secrets.token_hex(32))
@@ -19,15 +21,19 @@ MATRIX_SHEET_ID = "1WZdI-VbPaNZ2elgY0DvF0WoTRlqKztCkGrAtYvuk3lU"
 MATRIX_SHEET_NAME = "Sheet1"
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-creds = Credentials.from_service_account_file('credentials.json', scopes=SCOPES)
+
+
+GOOGLE_CREDS = json.loads(os.environ['GOOGLE_CREDS_JSON'])
+creds = Credentials.from_service_account_info(GOOGLE_CREDS, scopes=SCOPES)
+
+#creds = Credentials.from_service_account_file('credentials.json', scopes=SCOPES)
 client = gspread.authorize(creds)
 
 
 def get_credentials():
-    return service_account.Credentials.from_service_account_file(
-        "credentials.json",
-        scopes=["https://www.googleapis.com/auth/spreadsheets"]
-    )
+    info = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+    return Credentials.from_service_account_info(info, scopes=["https://www.googleapis.com/auth/spreadsheets"])
+
 
 
 def read_price_sheet():
