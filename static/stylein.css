@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #b0f1b4, #f7dba4);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.left-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-panel {
+    margin-right: 30px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+label {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+input, select {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.material-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.add-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #444;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.view-rate-btn {
+    background: #5c4b32;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.divider {
+    width: 1px;
+    background: #333;
+    margin: 0 20px;
+}
+
+.right-panel {
+    justify-content: flex-start;
+}
+
+.action-btn {
+    background: #5c4b32;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+

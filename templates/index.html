@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mattress Rate Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylein.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Generate Net Rate for<br>Customized Product's</h2>
+            <form method="POST">
+                <label>Length</label>
+                <input type="text" name="length" placeholder="in inches" required>
+
+                <label>Width</label>
+                <input type="text" name="width" placeholder="in inches" required>
+
+                <div style="justify-content: space-evenly;display: block;">
+                <label>Materials Used</label>
+                <div id="core-layers">
+                    <div class="material-row">
+                        <select name="core_material">
+                            {% for m in materials %}
+                                <option value="{{m}}">{{m}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="core_thickness" placeholder="Thickness" required>
+                    </div>
+                </div>
+
+                <button type="button" class="add-btn" onclick="addCoreLayer()">+</button>
+                </div>
+                <button type="submit" class="view-rate-btn">View Rate</button>
+            </form>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="right-panel">
+            <button class="action-btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1JcMtiFSqjUVUr8dNOi8nCPrKn1Oee628jW4H3eq3Tvk/edit?gid=951881923#gid=951881923')">View Costing Sheet</button>
+            <button class="action-btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1WZdI-VbPaNZ2elgY0DvF0WoTRlqKztCkGrAtYvuk3lU/edit?gid=705465160#gid=705465160')">View All Combination</button>
+            <button class="action-btn" onclick="window.location.href='/customize'">Customize Sheet</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    
+
+    <script>
+        function addCoreLayer() {
+            var div = document.createElement("div");
+            div.className = "material-row";
+            div.innerHTML = `
+                <select name="core_material">
+                    {% for m in materials %}
+                        <option value="{{m}}">{{m}}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="core_thickness" placeholder="Thickness" >
+            `;
+            document.getElementById("core-layers").appendChild(div);
+        }
+
+    </script>
+</body>
+</html>

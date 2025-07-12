@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: mattress-billing-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: FLASK_SECRET_KEY
+        value: "c0b3d1ee094f03d71c8f83a23416cac84e56c33dabe49aa9fb79a803433d2b49"

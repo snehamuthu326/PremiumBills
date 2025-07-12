@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mattress Customizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #f2f4f7, #e2ecf9);
+    }
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 30px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .section {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+    }
+    .listbox {
+      margin-top: 12px;
+      list-style-type: none;
+      padding-left: 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+    .listbox li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    .listbox li.selected {
+      background-color: #d4eaff;
+    }
+    .btn {
+      margin-top: 12px;
+      padding: 10px 16px;
+      background: #356ad8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: #aaa;
+      margin-left: 8px;
+    }
+    .wide-btn {
+      width: 100%;
+      margin-top: 24px;
+    }
+    .full-span {
+      grid-column: span 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Section 1: Add Layer -->
+    <div class="section">
+      <h2>Select Materials & Thickness</h2>
+      <label for="material">Material</label>
+      <select id="material">
+        {% for m in materials %}
+          <option value="{{ m }}">{{ m }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="thickness">Thickness (inches)</label>
+      <input type="number" id="thickness" step="0.1" />
+
+      <button class="btn" onclick="addLayer()">Add Item</button>
+      <button class="btn btn-secondary" onclick="deleteLayer()">Delete Selected Item</button>
+
+      <ul id="layerList" class="listbox"></ul>
+    </div>
+
+    <!-- Section 2: Add Custom Sizes -->
+    <div class="section">
+      <h2>Add Custom Sizes</h2>
+      <label for="length">Length (inches)</label>
+      <input type="number" id="length" />
+
+      <label for="width">Width (inches)</label>
+      <input type="number" id="width" />
+
+      <button class="btn" onclick="addCustomSize()">Add Size</button>
+      <button class="btn btn-secondary" onclick="deleteCustomSize()">Delete Selected Size</button>
+
+      <ul id="customSizeList" class="listbox"></ul>
+    </div>
+
+    <!-- Section 3: Finalize Product -->
+    <div class="section full-span">
+      <h2>Finalize Products & Generate Sheet</h2>
+      <button class="btn wide-btn" onclick="finalizeProduct()">Finalize Above Product</button>
+
+      <h3>Custom Products</h3>
+      <ul id="productList" class="listbox"></ul>
+      <button class="btn btn-secondary" onclick="deleteCustomProduct()">Delete Selected Product</button>
+
+      <button class="btn wide-btn" onclick="generateMatrix()">Generate Customized Matrix Sheet</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='customize.js') }}"></script>
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mattress Billing & Custom Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Customise Your Costing Sheet</h1>
+
+    <div class="form-group">
+      <h3>Select Materials for your Customized Products</h3>
+      <label for="material">Select Material:</label>
+      <select id="material" name="material">
+        {% for m in materials %}
+          <option value="{{ m }}">{{ m }}</option>
+        {% endfor %}
+      </select>
+      <label for="thickness">Thickness (inches):</label>
+      <input type="number" id="thickness" name="thickness" step="0.1" />
+    </div>
+
+    <div class="button-group">
+      <button onclick="addLayer()">Add Item</button>
+      <button onclick="deleteLayer()">Delete Selected Item</button>
+    </div>
+
+    <ul id="layerList" class="listbox"></ul>
+
+    <button class="primary-btn" onclick="finalizeProduct()">Finalize The Above Product</button>
+
+    <h2>Custom Products</h2>
+    <div class="product-section">
+      <ul id="productList" class="listbox"></ul>
+      <button onclick="deleteCustomProduct()">Delete Selected Product</button>
+    </div>
+
+    <h2>Add Custom Sizes for your Combinations</h2>
+    <div class="form-group inline">
+      <label for="length">Length:</label>
+      <input type="number" id="length" name="length" />
+      <label for="width">Width:</label>
+      <input type="number" id="width" name="width" />
+    </div>
+
+    <div class="button-group">
+      <button onclick="addCustomSize()">Add Size</button>
+      <button onclick="deleteCustomSize()">Delete Selected Size</button>
+    </div>
+
+    <ul id="customSizeList" class="listbox"></ul>
+
+    <button class="primary-btn" onclick="generateMatrix()">View Customized Costing Sheet</button>
+  </div>
+
+  <script src="{{ url_for('static', filename='customize.js') }}"></script>
+</body>
+</html>
+-->
